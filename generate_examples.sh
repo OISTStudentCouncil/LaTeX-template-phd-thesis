@@ -2,7 +2,9 @@
 set -euox pipefail
 
 # setup
-cp oist_thesis.cls Examples/oist_thesis.cls
+# Template/oist_thesis.cls is the single source of truth for the formatting
+# rules; Examples/ just gets a copy of it.
+cp Template/oist_thesis.cls Examples/oist_thesis.cls
 cd Examples
 mv Thesis.tex Backup_Thesis.tex
 rm -f Thesis.* # remove auxillary files
