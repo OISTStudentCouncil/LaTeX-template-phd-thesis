@@ -5,9 +5,10 @@ Please refer to \url{https://www.oist.jp/education/policies-regulations/gs-polic
 
 Here is an example.
 
-\setlength\LTleft{-5pt} % align the table to the left margin
-
-\begin{longtable}{l p{0.58 \textwidth}}
+% Break up this table into several ones if it takes up more than one page
+\setlength\LTleft{0pt}
+\setlength\LTright{0pt}
+\begin{xltabular}{\textwidth}{@{}l X@{}}
     PPT  & positive partial transpose                \\
     SRPT & Schr\"odinger-Robertson partial transpose
-\end{longtable}
+\end{xltabular}

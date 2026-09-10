@@ -27,10 +27,12 @@
 \graphicspath{{./Images/}} % Specifies the directory where pictures are stored
 
 \usepackage{eso-pic} % For the background picture on the title page
-
+\usepackage{xltabular} % For Glossary
 \usepackage{setspace} % For using single or double spacing
 \usepackage{longtable} % tables that can span several pages
 \usepackage[hidelinks]{hyperref} % Adds clickable links at references
+\urlstyle{same} % URLs in the document font rather than typewriter
+\usepackage{xurl} % Let long URLs break anywhere, so they cannot run into the margin
 \usepackage{indentfirst} % Indent first paragraph after a section
 \usepackage[titletoc]{appendix} % Display "Appendix A" in table of contents
 \usepackage[hang,flushmargin]{footmisc} % align footnotes to the left
@@ -64,15 +66,20 @@
 \renewcommand{\theprop}{\thechapter.\arabic{prop}}
 
 % Defining the theorem box for Criteria
+%
+% This used to wrap the criterion in a centred minipage of 0.9\textwidth. That
+% narrowed \linewidth inside the box, and since an equation is numbered against
+% \linewidth, any equation stated inside a criterion had its number pulled in
+% from the right margin while every other equation in the thesis sat flush with
+% it. The criterion now spans the full text width, so all equation numbers line
+% up. It still stands out through the bold "Criterion N." label and the italic
+% body that \newtheorem gives it, and it can now break across a page, which the
+% minipage prevented.
 \newtheorem{critere}{Criterion}
-\newcommand{\crit}[2]{
-\begin{center}  
-	\begin{minipage}[c]{0.9 \textwidth}
-		\begin{critere}
-			\textbf{\textup{ #1}} --- #2
-		\end{critere}
-	\end{minipage}
-\end{center}
+\newcommand{\crit}[2]{%
+	\begin{critere}
+		\textbf{\textup{#1}} --- #2
+	\end{critere}
 }
 
 % Powers of 10 notation

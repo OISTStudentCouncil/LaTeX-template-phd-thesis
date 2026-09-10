@@ -1,0 +1,5 @@
+# Shell scripts must keep LF line endings. On a Windows checkout Git otherwise
+# converts them to CRLF, and bash then fails on the shebang with a misleading
+# "No such file or directory". This affects generate_examples.sh as well as
+# check_overfull.sh.
+*.sh text eol=lf

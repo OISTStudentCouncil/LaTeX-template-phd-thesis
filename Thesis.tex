@@ -14,6 +14,12 @@
 \documentclass[temporary]{oist_thesis} % Temporary version for thesis revision and examination
 %\documentclass[final]{oist_thesis} % Final version for thesis submission
 
+% Add the showframe option while you are writing to draw the edge of the text
+% block on every page, e.g. \documentclass[temporary,showframe]{oist_thesis}.
+% It makes anything spilling into the 2.5cm margins obvious, in particular long
+% equations, which LaTeX never breaks by itself and which do not always get the
+% black overfull bar. Remove the option before you submit.
+
 % The documentclass oist_thesis includes the following packages: geometry, caption, xkeyval, titlesec
 
 \usepackage{times} % Font for main text
@@ -28,9 +34,12 @@
 
 \usepackage{eso-pic} % For the background picture on the title page
 
+\usepackage{xltabular} % For the Glossary, List of Abbreviations and Nomenclature
 \usepackage{setspace} % For using single or double spacing
 \usepackage{longtable} % tables that can span several pages
 \usepackage[hidelinks]{hyperref} % Adds clickable links at references
+\urlstyle{same} % URLs in the document font rather than typewriter
+\usepackage{xurl} % Let long URLs break anywhere, so they cannot run into the margin
 \usepackage{indentfirst} % Indent first paragraph after a section
 \usepackage[titletoc]{appendix} % Display "Appendix A" in table of contents
 \usepackage[hang,flushmargin]{footmisc} % align footnotes to the left

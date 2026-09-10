@@ -12,6 +12,14 @@
 \DeclareOption{temporary}{\@finalfalse}
 \DeclareOption{final}{\@finaltrue}
 
+% Draft aid: draw the boundary of the text block on every page, so that
+% anything spilling into the 2.5cm margins (long equations in particular) is
+% impossible to miss.  Purely visual, changes no dimension.  Use it while you
+% write, remove it before you submit:
+%     \documentclass[temporary,showframe]{oist_thesis}
+\newif\if@drawframe\@drawframefalse
+\DeclareOption{showframe}{\@drawframetrue}
+
 \ProcessOptions\relax
 
 %-------------------------------------------------------------------------------
@@ -20,11 +28,25 @@
 
 \LoadClass[12pt, oneside]{book} % 12 pt font, one-sided book style
 
+\if@drawframe\PassOptionsToPackage{showframe}{geometry}\fi
 \RequirePackage[a4paper, inner=2.5cm ,outer=2.5cm, top=2.4cm, bottom=2.5cm]{geometry}  % Changing size of document
 
 \usepackage{titlesec} % To move the chapter title up
-\titleformat{\chapter}[display]{\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\LARGE}
+\titleformat{\chapter}[display]{\normalfont\huge\bfseries\raggedright}{\chaptertitlename\ \thechapter}{20pt}{\LARGE}
 \titlespacing{\chapter}{0pt}{0pt}{20pt} % 0 left, 0 top, 20 bottom
+
+% Headings are set ragged right rather than justified.
+%
+% A justified heading has very few possible break points, because the words are
+% large, so TeX often prefers to overshoot the right margin rather than open up
+% an ugly gap. A long chapter title then runs into the 2.5cm margin: the title
+% "Cavity Mediated Two-Photon Processes in Two Qubits Circuit QED" overflowed by
+% 16.8pt before this change. Ragged right simply breaks at the last word that
+% fits, so a heading can never overflow. The sizes and spacing below are the
+% ones the book class already uses, only the justification changes.
+\titleformat{\section}{\normalfont\Large\bfseries\raggedright}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries\raggedright}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalfont\normalsize\bfseries\raggedright}{\thesubsubsection}{1em}{}
 
 \if@final
     \RequirePackage[font={footnotesize}, labelfont=bf, singlelinecheck=no]{caption} % caption: FIG in bold
@@ -46,11 +68,43 @@
 	\thesisspacing % Double or single spacing
 }
 
-% Be strict about what counts as "overfull"
+%-------------------------------------------------------------------------------
+%	CATCHING CONTENT THAT SPILLS INTO THE MARGINS
+%-------------------------------------------------------------------------------
+
+% Be strict about what counts as "overfull": report even a 0.1pt overshoot,
+% so that nothing sneaks into the 2.5cm margins unnoticed.
 \hfuzz=0pt
 \vfuzz=0pt
 
-% Make overfull lines visible in the PDF margin (set 0pt to disable)
+% Mark overfull *paragraph* lines with a thick black bar in the margin
+% (set to 0pt to disable).
+%
+% Note the deliberate wording "paragraph lines".  TeX only ever draws this bar
+% when it packs a box to a width you asked for, and it goes out of its way not
+% to draw it for displayed mathematics:
+%
+%   * Alignment-based displays -- align, align*, gather, multline, split,
+%     alignat, flalign, eqnarray, and also array/tabular -- NEVER get the bar.
+%     TeX's alignment routine saves \overfullrule, sets it to 0pt while it
+%     packs the alignment and restores it afterwards; the comment in tex.web
+%     (section 804, "Package the preamble list") reads "prevent rule from
+%     being packaged".  No package or class can change this, it is in the
+%     engine.
+%
+%   * A plain display -- equation, equation*, \[...\] -- does get a bar (see
+%     tex.web section 1201, "Squeeze the equation as much as possible"), but
+%     TeX appends it at the *end* of the formula rather than at the edge of the
+%     text block.  An equation that overshoots by more than 2.5cm therefore
+%     puts its bar past the edge of the paper, where you cannot see it.
+%
+% Both cases are still reported in Thesis.log as "Overfull \hbox (...)", so the
+% log is the reliable place to look; ./check_overfull.sh collects them for you.
+% The showframe class option draws the text block on every page, which makes an
+% over-wide equation obvious at a glance.
+%
+% Display maths is never broken across lines automatically: if a formula does
+% not fit you have to break it yourself with split, multline or align.
 \overfullrule=5pt
 
 %-------------------------------------------------------------------------------

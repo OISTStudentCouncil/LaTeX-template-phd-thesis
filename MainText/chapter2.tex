@@ -1,6 +1,6 @@
 \chapter{How to use the templates} \label{ch-template}
 
-This is a practical guide into how to use this template, by explaining the role of the different folders, and an option of \verb|\documentclass{oist_thesis}|, which accepts either \verb|temporary| or \verb|final|.
+This is a practical guide into how to use this template, by explaining the role of the different folders, and the options of \verb|\documentclass{oist_thesis}|, which accepts either \verb|temporary| or \verb|final|, plus an optional \verb|showframe|.
 
 \section{Folders}
 
@@ -72,11 +72,57 @@ The command \texttt{\textbackslash numberedchapter} is only relevant for a trans
 
 \subsection{OVERFULL LINES}
 
-\LaTeX\ should warn you at compile time of overfull lines, with messages along the lines of \texttt{Overfull \textbackslash hbox (14.45969pt too wide) in paragraph at lines 5--151}.
+\LaTeX\ should warn you at compile time of overfull lines, with messages along the lines of
+\begin{verbatim}
+Overfull \hbox (14.45pt too wide) in paragraph at lines 5--151
+\end{verbatim}
 You should always address those warnings and fix the issues, usually by adding a \texttt{\textbackslash -} inside a word to indicate that it can be split at that point.
-To make the issue more obvious, the template will add a thick black line wherever this happens, you might see several in this document.
+To make the issue more obvious, the template will add a thick black line in the margin wherever this happens, you might see several in this document.
 
 In general, the final document should compile without any warnings or errors.
+
+\subsection{OVER-WIDE EQUATIONS} \label{sec-wide-equations}
+
+The black bar described above is drawn by \TeX\ itself, and it only ever appears for \emph{lines of text}.
+Displayed mathematics is treated differently, in two ways that are worth knowing about, because a formula that is too long will happily run into the 2.5\,cm margins.
+
+First, \LaTeX\ never breaks a display across lines on your behalf.
+A paragraph of text is broken into lines automatically, but a formula is set as one long line, and if it does not fit it simply sticks out.
+You have to choose the break point yourself.
+
+Second, the black bar is unreliable for maths:
+\begin{itemize}
+	\item In \texttt{align}, \texttt{gather}, \texttt{multline}, \texttt{split}, \texttt{eqnarray} and in tables, \textbf{no bar is ever drawn}. These are built with \TeX's alignment machinery, which deliberately switches the bar off while it assembles them. No package or class can turn it back on.
+	\item In \texttt{equation}, \texttt{equation*} and \verb|\[...\]|, a bar \emph{is} drawn, but at the end of the formula rather than at the edge of the text block. A formula that overshoots by more than the 2.5\,cm margin therefore draws its bar off the edge of the paper, where you cannot see it.
+\end{itemize}
+
+Whichever environment you used, the problem is always recorded in \texttt{Thesis.log}, so that is the place to check.
+An equation reports as \texttt{Overfull \textbackslash hbox (62.31pt too wide) detected at line 88} and an \texttt{align} reports as \texttt{Overfull \textbackslash hbox (103.9pt too wide) in alignment at lines 120--126}.
+Running \verb|./check_overfull.sh| after compiling collects all of these in one list.
+
+Two things make over-wide maths easy to spot while you write.
+Adding the \texttt{showframe} option, as in
+\begin{verbatim}
+\documentclass[temporary,showframe]{oist_thesis}
+\end{verbatim}
+draws the outline of the text block on every page, so anything sticking out is obvious; remove the option before you submit.
+Setting \verb|\overfullrule=0pt| in \texttt{Thesis.tex} turns the black bars off again if you find them distracting, but do not submit a thesis that still needs them.
+
+To fix a formula that is too long, break it yourself.
+Use \texttt{split} inside an \texttt{equation} to spread one equation over several lines with a single number, breaking before a relation or a binary operator:
+\begin{verbatim}
+\begin{equation}
+    \begin{split}
+        f(x) &= a_1 x + a_2 x^2 + a_3 x^3 \\
+             &\quad + a_4 x^4 + a_5 x^5 .
+    \end{split}
+\end{equation}
+\end{verbatim}
+Use \texttt{multline} when there is no natural alignment point, which sets the first line flush left and the last flush right, and \texttt{align} when you genuinely have several equations to line up.
+Long fractions and long arguments to \verb|\left(...\right)| are the usual culprits, so it often helps to name a recurring subexpression with \verb|\newcommand| and use that instead.
+
+Do not fix a wide equation with \verb|\resizebox|, \verb|\scalebox| or a smaller font.
+Those change the size of the mathematics relative to the surrounding text, which the formatting requirements do not allow.
 
 \subsection{BIBLIOGRAPHY}
 
@@ -88,5 +134,19 @@ Structures the style for the appendices and builds them. The appendices are numb
 
 \subsection{Differences between temporary version and final version}
 
-There is only one difference between \verb|\documentclass[temporary]{oist_thesis}| and \verb|\documentclass[final]{oist_thesis}|: the line spacing is different.
+There is only one difference between
+\begin{verbatim}
+\documentclass[temporary]{oist_thesis}
+\documentclass[final]{oist_thesis}
+\end{verbatim}
+namely the line spacing.
 This might create small issues, such as page breaking with large tables, images or captions, when compiling the same content.
+
+\subsection{The \texttt{showframe} option}
+
+Besides \texttt{temporary} and \texttt{final}, the class accepts an optional \texttt{showframe}:
+\begin{verbatim}
+\documentclass[temporary,showframe]{oist_thesis}
+\end{verbatim}
+It draws the outline of the text block on every page so that you can see immediately whether an equation, a table or a figure spills into the margins, as discussed in Section~\ref{sec-wide-equations}.
+It is a drafting aid only and changes no dimension of the document, but remove it before you submit.
