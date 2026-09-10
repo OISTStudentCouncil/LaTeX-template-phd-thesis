@@ -32,7 +32,13 @@
 \RequirePackage[a4paper, inner=2.5cm ,outer=2.5cm, top=2.4cm, bottom=2.5cm]{geometry}  % Changing size of document
 
 \usepackage{titlesec} % To move the chapter title up
-\titleformat{\chapter}[display]{\normalfont\huge\bfseries\raggedright}{\chaptertitlename\ \thechapter}{20pt}{\LARGE}
+% The \vspace*{-6pt} sits in the *label*, which titlesec only typesets for a
+% numbered chapter. A numbered chapter opens with the \huge "Chapter N" while an
+% unnumbered one (Abstract, Introduction, Table of Contents) opens with the
+% \LARGE title, and the taller first line pushed numbered chapters about 2mm
+% further down the page. Correcting it here rather than in \titlespacing means
+% \chapter and \chapter* both start at the same height as ordinary body text.
+\titleformat{\chapter}[display]{\normalfont\huge\bfseries\raggedright}{\vspace*{-6pt}\chaptertitlename\ \thechapter}{20pt}{\LARGE}
 % 0 left, -35pt top, 20pt bottom.
 %
 % The top value is negative on purpose. With 0pt the first line of a chapter
