@@ -33,7 +33,20 @@
 
 \usepackage{titlesec} % To move the chapter title up
 \titleformat{\chapter}[display]{\normalfont\huge\bfseries\raggedright}{\chaptertitlename\ \thechapter}{20pt}{\LARGE}
-\titlespacing{\chapter}{0pt}{0pt}{20pt} % 0 left, 0 top, 20 bottom
+% 0 left, -35pt top, 20pt bottom.
+%
+% The top value is negative on purpose. With 0pt the first line of a chapter
+% heading still sat about 1.4cm below where body text starts on an ordinary
+% page, because titlesec measures from the first baseline and a \huge line
+% reserves far more headroom than a 12pt one. Chapter pages therefore looked
+% like they had a much bigger top margin than every other page.
+%
+% -35pt lines an unnumbered chapter (Abstract, Introduction, Table of Contents)
+% up exactly with body text. A numbered chapter still starts about 2mm lower,
+% because its first line is the \huge "Chapter N" rather than the \LARGE title
+% and a single spacing value has to serve both. Do not push this further: at
+% -40pt the unnumbered chapters rise above the 2.4cm top margin.
+\titlespacing{\chapter}{0pt}{-35pt}{20pt}
 
 % Headings are set ragged right rather than justified.
 %

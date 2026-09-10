@@ -1,29 +1,26 @@
 #!/usr/bin/env bash
 set -euox pipefail
 
-# setup
+# Rebuilds Examples/Thesis_example.pdf, the compiled example that ships with the
+# repository, and keeps the class file in step with the template.
+#
+# Run this from the top level of the repository after changing anything in
+# Template/ or Examples/.
+
 # Template/oist_thesis.cls is the single source of truth for the formatting
 # rules; Examples/ just gets a copy of it.
 cp Template/oist_thesis.cls Examples/oist_thesis.cls
+
 cd Examples
-mv Thesis.tex Backup_Thesis.tex
-rm -f Thesis.* # remove auxillary files
-cp Backup_Thesis.tex Thesis.tex
 
-# Thesis final version
-pdflatex Thesis.tex
+pdflatex -interaction=nonstopmode Thesis.tex
 bibtex Thesis.aux
-pdflatex Thesis.tex
-pdflatex Thesis.tex
-mv Thesis.pdf Thesis_final_version.pdf
+pdflatex -interaction=nonstopmode Thesis.tex
+pdflatex -interaction=nonstopmode Thesis.tex
+mv Thesis.pdf Thesis_example.pdf
 
-# Thesis temporary version
-sed -i 's/\\documentclass\[final\]/\\documentclass\[temporary\]/' Thesis.tex
-pdflatex Thesis.tex
-pdflatex Thesis.tex
-mv Thesis.pdf Thesis_temporary_version.pdf
+# remove the auxiliary files, keeping the sources and the PDF
+rm -f Thesis.aux Thesis.bbl Thesis.blg Thesis.lof Thesis.log Thesis.lot \
+      Thesis.out Thesis.toc
 
-# cleanup
-rm -f Thesis.*
-mv Backup_Thesis.tex Thesis.tex
 cd ..

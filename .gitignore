@@ -274,3 +274,12 @@ TSWLatexianTemp*
 
 # Makeindex log files
 *.lpz
+
+# The blanket *.pdf rule above is meant for compiled output, but a few PDFs are
+# deliberately part of the repository: the figures used by the example, and the
+# two compiled documents that ship with it. Without these exceptions they are
+# silently ignored, and regenerating one looks like it did nothing.
+!Template/Images/**/*.pdf
+!Examples/Images/**/*.pdf
+!Template/Thesis.pdf
+!Examples/Thesis_example.pdf
