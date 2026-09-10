@@ -2,14 +2,16 @@
 
 \vspace*{8cm}
 
-\hfill
-\begin{parbox}{0.6\textwidth}{
-        \begin{flushright}
+% A flushright block rather than \hfill, so the position of the dedication does
+% not depend on stray spaces around it. There is also no "parbox" environment in
+% LaTeX: \begin{parbox}...\end{parbox} only ever worked by accident, because
+% \endparbox happens to be undefined and therefore silently does nothing.
+\begin{flushright}
+	\begin{minipage}{0.6\textwidth}
+		\raggedleft
 
-            % Keep the dedication very short
-            For Harry Wilson, the man who taught me everything.
+		% Keep the dedication very short
+		For Harry Wilson, the man who taught me everything.
 
-        \end{flushright}}
-\end{parbox}
-
-
+	\end{minipage}
+\end{flushright}
