@@ -1,6 +1,6 @@
 
 
-\chapter{Figures, tables and images} \label{chap-3}
+\chapter{Figures, Tables and Images} \label{chap-3}
 
 \section{Figures}
 
@@ -14,7 +14,7 @@
 \begin{figure}
     \center
     \includegraphics[width=0.3\textwidth]{chap3/symbol.jpg}
-    \caption*{This secret image won't be numbered and won't appear in the List of Figures because of the *}
+    \caption*{This secret image won't be numbered and won't appear in the List of Figures because of the *. Note that OIST policy requires all figures and tables to be numbered.}
 \end{figure}
 
 Refer to figure like this: Figure~\ref{fig-example} or this (Fig.~\ref{fig-example}). If you want to include a list of figure, you can use a short version of the caption as shown in Figure~\ref{fig-example}.
@@ -24,8 +24,7 @@ Refer to figure like this: Figure~\ref{fig-example} or this (Fig.~\ref{fig-examp
 
 \begin{table}
     \center
-    \caption{Short heading for the List of Tables.}
-    \caption*{Full caption with all the details here.}
+    \caption[Short caption for List of Tables]{{\bfseries Short caption (if wanted).} Full caption with all the details here.}
     \begin{tabular}{c|c}
         Parameter    & Value  \\ \hline \hline
         $\Delta$     & 0, 150 \\
@@ -38,7 +37,7 @@ Refer to figure like this: Figure~\ref{fig-example} or this (Fig.~\ref{fig-examp
 \end{table}
 
 \begin{table} \center
-    \caption*{This secret table won't be numbered and won't appear in the List of Figures because of the * }
+    \caption*{This secret table won't be numbered and won't appear in the List of Tables because of the *. Note that OIST policy requires all figures and tables to be numbered.}
     \begin{tabular}{c|c}
         Parameter    & Value   \\ \hline \hline
         $\Delta$     & 0, 1500 \\
@@ -50,4 +49,4 @@ Refer to figure like this: Figure~\ref{fig-example} or this (Fig.~\ref{fig-examp
 \end{table}
 
 
-Refer to tables this this: Table~\ref{tab-values}.
+Refer to tables like this: Table~\ref{tab-values}.

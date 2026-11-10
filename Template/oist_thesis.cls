@@ -75,7 +75,14 @@
 	\newcommand{\thesisspacing}{\doublespacing}
 \fi
 
+% \unnumberedchapter goes right before \chapter*, which starts a new page. The
+% Contents entry and the hyperref anchor have to be placed on that new page, so
+% the page is cleared here first. Without the \clearpage both were recorded on
+% the previous page: the Contents showed the wrong page number for every
+% unnumbered chapter, and clicking an entry jumped to the end of the previous
+% section. The \clearpage inside the following \chapter* then does nothing.
 \newcommand{\unnumberedchapter}[1]{ % Preparation for unnumbered chapters
+	\clearpage % Start the new page now, so the entry and anchor land on it
 	\phantomsection % To help hyperref link to the right page
 	\addcontentsline{toc}{chapter}{#1} % Also adds the chapter name to the Contents
 }

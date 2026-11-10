@@ -1,4 +1,12 @@
-\chapter{How to use the templates} \label{ch-template}
+\chapter{How to Use the Templates} \label{ch-template}
+
+% Code in this chapter (\verb|...| and the verbatim blocks) is set in the body
+% font, so the whole template uses one font. The font is restored at the end
+% of the chapter.
+\makeatletter
+\let\oistsavedverbatimfont\verbatim@font
+\def\verbatim@font{\normalfont}
+\makeatother
 
 This is a practical guide into how to use this template, by explaining the role of the different folders, and the options of \verb|\documentclass{oist_thesis}|, which accepts either \verb|temporary| or \verb|final|, plus an optional \verb|showframe|.
 
@@ -8,95 +16,95 @@ The repository contains two top-level folders. \textbf{Template} is this
 document: the empty starting point you write your thesis in, and the one you
 should copy. \textbf{Examples} is a complete thesis, kept so that you can look
 up how something was actually done and copy the code across. The two share the
-same \texttt{oist\_thesis.cls}, and \texttt{generate\_examples.sh} copies it
-from \texttt{Template} into \texttt{Examples} so the formatting can never drift
+same oist\_thesis.cls, and generate\_examples.sh copies it
+from Template into Examples so the formatting can never drift
 apart.
 
-Inside \texttt{Template} there are three folders, detailed here:
+Inside Template there are three folders, detailed here:
 
 \begin{itemize}
 
-	\item \textbf{Images.} This folder should contain all the images that you will use in your thesis. It can contain subfolders, for example one for each chapter. To include an image from the main text, use something like \texttt{\textbackslash includegraphics\{subfolder/image.jpg\} } without worrying about the \texttt{Images} path.
+	\item \textbf{Images.} This folder should contain all the images that you will use in your thesis. It can contain subfolders, for example one for each chapter. To include an image from the main text, use something like \textbackslash includegraphics\{subfolder/image.jpg\}  without worrying about the Images path.
 
-	\item \textbf{MainText.} This folder contains a series of \LaTeX\ files that form the main text: introduction, chapters, conclusion, appendices and published articles. The introduction and conclusion as they are now are not numbered, which creates a few difficulties with the headers of the thesis. Those are solved by including the commands \texttt{\textbackslash unnumberedchapter\{\}} and \texttt{\textbackslash numberedchapter} before including the files in \texttt{Thesis.tex}. If you want the introduction and conclusion to be numbered, include them as regular chapters.
+	\item \textbf{MainText.} This folder contains a series of \LaTeX\ files that form the main text: introduction, chapters, conclusion, appendices and published articles. The introduction and conclusion as they are now are not numbered, which creates a few difficulties with the headers of the thesis. Those are solved by including the commands \textbackslash unnumberedchapter\{\} and \textbackslash numberedchapter before including the files in Thesis.tex. If you want the introduction and conclusion to be numbered, include them as regular chapters.
 
 	\item \textbf{Preamble.} This folder contains a series of \LaTeX\ files with the pages that will appear before the main text. Please write (or copy and paste) your own text in those files and delete the dummy text when appropriate. The files are:
 	      \begin{itemize}
-		      \item \texttt{abbreviations.tex} --- List of abbreviations. If the list goes over one page, create another table.
-		      \item \texttt{abstract.tex} --- Abstract. Follow directions in the file.
-		      \item \texttt{acknowledgments.tex} --- Acknowledgments. Follow directions in the file.
-		      \item \texttt{declaration.tex} --- Declaration of Original and Sole Authorship. Insert the text from the template made available by the Graduate School in the thesis submission form.
-		      \item \texttt{dedication.tex} --- Dedication (optional). Should only be a very few lines.
-		      \item \texttt{glossary.tex} --- Glossary (optional). If the list goes over one page, create another table.
-		      \item \texttt{nomenclature.tex} --- Nomenclature (optional). If the list goes over one page, create another table.
+		      \item abbreviations.tex --- List of abbreviations. If the list goes over one page, create another table.
+		      \item abstract.tex --- Abstract. Follow directions in the file.
+		      \item acknowledgments.tex --- Acknowledgments. Follow directions in the file.
+		      \item declaration.tex --- Declaration of Original and Sole Authorship. Insert the text from the template made available by the Graduate School in the thesis submission form.
+		      \item dedication.tex --- Dedication (optional). Should only be a very few lines.
+		      \item glossary.tex --- Glossary (optional). If the list goes over one page, create another table.
+		      \item nomenclature.tex --- Nomenclature (optional). If the list goes over one page, create another table.
 
-		            These last three are built with \texttt{xltabular} and a column
-		            declared \texttt{X}, which is what makes the description column
+		            These last three are built with xltabular and a column
+		            declared X, which is what makes the description column
 		            stretch all the way to the right-hand margin before wrapping.
 		            Add rows freely, but leave the table header line alone: replacing
-		            \texttt{X} with a fixed width such as \verb|p{0.58\textwidth}|
+		            X with a fixed width such as \verb|p{0.58\textwidth}|
 		            makes the text wrap early and stop well short of the margin.
-		      \item \texttt{physics\_bibstyle.bst} --- Bibliography style file modified by Jeremie Gillet in 2011 to suit his thesis. Might be suitable for physics. If you want to use another custom bibliography style, include the file in this folder.
-		      \item \texttt{Thesis\_bibliography.bib} --- BibTeX file containing your bibliography.
-		      \item \texttt{Thesis\_publications.bib} --- BibTeX file containing the list of your own publications (only for thesis by publication).
+		      \item physics\_bibstyle.bst --- Bibliography style file modified by Jeremie Gillet in 2011 to suit his thesis. Might be suitable for physics. If you want to use another custom bibliography style, include the file in this folder.
+		      \item Thesis\_bibliography.bib --- BibTeX file containing your bibliography.
+		      \item Thesis\_publications.bib --- BibTeX file containing the list of your own publications (only for thesis by publication).
 	      \end{itemize}
 
 \end{itemize}
 
-\section{\texttt{Thesis.tex}}
+\section{Thesis.tex}
 
 This is the main file, the only one that needs to be compiled to build the thesis. Compile once with \LaTeX, once with BibTeX and finally twice with \LaTeX\ to get all the references right. At the top of this file, you can see \verb|\documentclass[temporary]{oist_thesis}|. When you submit a temporary version to the graduate school, do not modify it. When you submit a final version, use \verb|\documentclass[final]{oist_thesis}| instead.
 
-Let's go through each section and comment them briefly. The last section will emphasize the differences between options \verb|\documentclass[temporary]{oist_thesis}| and \verb|\documentclass[final]{oist_thesis}|.
+Let's go through each section and comment them briefly. The last section will emphasize the differences between the options \verb|temporary| and \verb|final| of \verb|\documentclass{oist_thesis}|.
 
-\subsection{REQUIRED PACKAGES AND CONFIGURATIONS}
+\subsection{Required Packages and Configurations}
 
 This section contains the minimum number of packages and definitions to compile the thesis. No line should be removed or modified.
 
-\subsection{ADD YOUR PACKAGES}
+\subsection{Add Your Packages}
 
 Add you packages in this section.
 In general, try to include as little packages as possible, as some of them can interfere and break each other.
 
-\subsection{ADD YOUR DEFINITIONS AND COMMANDS}
+\subsection{Add Your Definitions and Commands}
 
 Optionally, add custom definitions in this section.
 You don't have to keep the examples that come with the template.
 
-\subsection{PICK YOUR BIBLIOGRAPHY STYLE}
+\subsection{Pick Your Bibliography Style}
 
-Pick the bibliography style the most adapted to your field within the \texttt{natbib} package.
+Pick the bibliography style the most adapted to your field within the natbib package.
 
-\subsection{TITLE PAGE}
+\subsection{Title Page}
 
 Creates the title page. Do not modify.
 
-\subsection{PREAMBLE PAGES}
+\subsection{Preamble Pages}
 
 Structures the style (header) for the preamble pages and builds them. Do not modify, except for deleting the optional preambles you might not want to include.
 
-\subsection{LIST OF CONTENTS/FIGURES/TABLES}
+\subsection{List of Contents/Figures/Tables}
 
 Creates the different lists. Do not modify.
 
-\subsection{THESIS MAIN TEXT}
+\subsection{Thesis Main Text}
 
 Structures the style for the main text chapters and builds them.
 
-The command \texttt{\textbackslash numberedchapter} is only relevant for a transition between unnumbered sections and numbered sections, it does not need to be included between each chapter.
+The command \textbackslash numberedchapter is only relevant for a transition between unnumbered sections and numbered sections, it does not need to be included between each chapter.
 
-\subsection{OVERFULL LINES}
+\subsection{Overfull Lines}
 
 \LaTeX\ should warn you at compile time of overfull lines, with messages along the lines of
 \begin{verbatim}
 Overfull \hbox (14.45pt too wide) in paragraph at lines 5--151
 \end{verbatim}
-You should always address those warnings and fix the issues, usually by adding a \texttt{\textbackslash -} inside a word to indicate that it can be split at that point.
+You should always address those warnings and fix the issues, usually by adding a \textbackslash - inside a word to indicate that it can be split at that point.
 To make the issue more obvious, the template will add a thick black line in the margin wherever this happens, you might see several in this document.
 
 In general, the final document should compile without any warnings or errors.
 
-\subsection{OVER-WIDE EQUATIONS} \label{sec-wide-equations}
+\subsection{Over-Wide Equations} \label{sec-wide-equations}
 
 The black bar described above is drawn by \TeX\ itself, and it only ever appears for \emph{lines of text}.
 Displayed mathematics is treated differently, in two ways that are worth knowing about, because a formula that is too long will happily run into the 2.5\,cm margins.
@@ -107,24 +115,24 @@ You have to choose the break point yourself.
 
 Second, the black bar is unreliable for maths:
 \begin{itemize}
-	\item In \texttt{align}, \texttt{gather}, \texttt{multline}, \texttt{split}, \texttt{eqnarray} and in tables, \textbf{no bar is ever drawn}. These are built with \TeX's alignment machinery, which deliberately switches the bar off while it assembles them. No package or class can turn it back on.
-	\item In \texttt{equation}, \texttt{equation*} and \verb|\[...\]|, a bar \emph{is} drawn, but at the end of the formula rather than at the edge of the text block. A formula that overshoots by more than the 2.5\,cm margin therefore draws its bar off the edge of the paper, where you cannot see it.
+	\item In align, gather, multline, split, eqnarray and in tables, \textbf{no bar is ever drawn}. These are built with \TeX's alignment machinery, which deliberately switches the bar off while it assembles them. No package or class can turn it back on.
+	\item In equation, equation* and \verb|\[...\]|, a bar \emph{is} drawn, but at the end of the formula rather than at the edge of the text block. A formula that overshoots by more than the 2.5\,cm margin therefore draws its bar off the edge of the paper, where you cannot see it.
 \end{itemize}
 
-Whichever environment you used, the problem is always recorded in \texttt{Thesis.log}, so that is the place to check.
-An equation reports as \texttt{Overfull \textbackslash hbox (62.31pt too wide) detected at line 88} and an \texttt{align} reports as \texttt{Overfull \textbackslash hbox (103.9pt too wide) in alignment at lines 120--126}.
+Whichever environment you used, the problem is always recorded in Thesis.log, so that is the place to check.
+An equation reports as Overfull \textbackslash hbox (62.31pt too wide) detected at line 88 and an align reports as Overfull \textbackslash hbox (103.9pt too wide) in alignment at lines 120--126.
 Running \verb|./check_overfull.sh| after compiling collects all of these in one list.
 
 Two things make over-wide maths easy to spot while you write.
-Adding the \texttt{showframe} option, as in
+Adding the showframe option, as in
 \begin{verbatim}
 \documentclass[temporary,showframe]{oist_thesis}
 \end{verbatim}
 draws the outline of the text block on every page, so anything sticking out is obvious; remove the option before you submit.
-Setting \verb|\overfullrule=0pt| in \texttt{Thesis.tex} turns the black bars off again if you find them distracting, but do not submit a thesis that still needs them.
+Setting \verb|\overfullrule=0pt| in Thesis.tex turns the black bars off again if you find them distracting, but do not submit a thesis that still needs them.
 
 To fix a formula that is too long, break it yourself.
-Use \texttt{split} inside an \texttt{equation} to spread one equation over several lines with a single number, breaking before a relation or a binary operator:
+Use split inside an equation to spread one equation over several lines with a single number, breaking before a relation or a binary operator:
 \begin{verbatim}
 \begin{equation}
     \begin{split}
@@ -133,13 +141,13 @@ Use \texttt{split} inside an \texttt{equation} to spread one equation over sever
     \end{split}
 \end{equation}
 \end{verbatim}
-Use \texttt{multline} when there is no natural alignment point, which sets the first line flush left and the last flush right, and \texttt{align} when you genuinely have several equations to line up.
+Use multline when there is no natural alignment point, which sets the first line flush left and the last flush right, and align when you genuinely have several equations to line up.
 Long fractions and long arguments to \verb|\left(...\right)| are the usual culprits, so it often helps to name a recurring subexpression with \verb|\newcommand| and use that instead.
 
 Do not fix a wide equation with \verb|\resizebox|, \verb|\scalebox| or a smaller font.
 Those change the size of the mathematics relative to the surrounding text, which the formatting requirements do not allow.
 
-\subsection{OTHER THINGS THE TEMPLATE HANDLES FOR YOU}
+\subsection{Other Things the Template Handles for You}
 
 A few more things are set up so that nothing drifts outside the 2.5\,cm margins.
 You do not need to do anything about them, but it is worth knowing they are
@@ -153,15 +161,15 @@ there so you do not undo them by accident.
 	      open up an ugly gap. Ragged right simply breaks at the last word that
 	      fits, so a long chapter title can never run into the margin.
 
-	\item \textbf{URLs use the document font.} \texttt{hyperref} would otherwise
+	\item \textbf{URLs use the document font.} hyperref would otherwise
 	      set them in typewriter, which looks out of place in the Reference List.
 	      Because a proportional font gives fewer sensible break points, the
-	      \texttt{xurl} package is loaded as well, so a long URL breaks wherever
+	      xurl package is loaded as well, so a long URL breaks wherever
 	      it needs to instead of sticking out.
 
 	\item \textbf{Numbered equations line up.} An equation number is placed
 	      against \verb|\linewidth|, so an equation written inside anything that
-	      narrows the text --- a \texttt{minipage}, a \texttt{quote}, a box of a
+	      narrows the text --- a minipage, a quote, a box of a
 	      fixed fraction of \verb|\textwidth| --- gets its number pulled in from
 	      the margin while every other equation sits flush with it. If your
 	      equation numbers do not line up, look for a narrowing environment
@@ -169,15 +177,15 @@ there so you do not undo them by accident.
 
 \end{itemize}
 
-\subsection{BIBLIOGRAPHY}
+\subsection{Bibliography}
 
 Includes the bibliography.
 
-\subsection{APPENDICES}
+\subsection{Appendices}
 
 Structures the style for the appendices and builds them. The appendices are numbered with letters but are structured like regular chapters.
 
-\subsection{Differences between temporary version and final version}
+\subsection{Differences between the Temporary and Final Versions}
 
 There is only one difference between
 \begin{verbatim}
@@ -187,11 +195,13 @@ There is only one difference between
 namely the line spacing.
 This might create small issues, such as page breaking with large tables, images or captions, when compiling the same content.
 
-\subsection{The \texttt{showframe} option}
+\subsection{The showframe Option}
 
-Besides \texttt{temporary} and \texttt{final}, the class accepts an optional \texttt{showframe}:
+Besides temporary and final, the class accepts an optional showframe:
 \begin{verbatim}
 \documentclass[temporary,showframe]{oist_thesis}
 \end{verbatim}
 It draws the outline of the text block on every page so that you can see immediately whether an equation, a table or a figure spills into the margins, as discussed in Section~\ref{sec-wide-equations}.
 It is a drafting aid only and changes no dimension of the document, but remove it before you submit.
+
+\makeatletter\let\verbatim@font\oistsavedverbatimfont\makeatother % Restore the code font
