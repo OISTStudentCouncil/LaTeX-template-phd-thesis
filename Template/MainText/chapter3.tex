@@ -4,14 +4,19 @@
 
 \section{Figures}
 
-\begin{figure}
+% [htbp] lets each figure and table stay where it is written ("here") when it
+% fits, instead of only at the top or bottom of a page or on a page of its own.
+% Without it, Figure 3.1 could not go at the top of this page (LaTeX puts no
+% floats above a chapter title) and ended up at the bottom, leaving a large
+% white gap under Section 3.2.
+\begin{figure}[htbp]
     \center
     \includegraphics[width=0.3\textwidth]{chap3/emblem.jpg}
     \caption[Short caption for List of Figures]{{\bfseries Short caption (if wanted).} Full caption with all the details here.}
     \label{fig-example}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[htbp]
     \center
     \includegraphics[width=0.3\textwidth]{chap3/symbol.jpg}
     \caption*{This secret image won't be numbered and won't appear in the List of Figures because of the *. Note that OIST policy requires all figures and tables to be numbered.}
@@ -22,7 +27,7 @@ Refer to figure like this: Figure~\ref{fig-example} or this (Fig.~\ref{fig-examp
 
 \section{Tables}
 
-\begin{table}
+\begin{table}[htbp]
     \center
     \caption[Short caption for List of Tables]{{\bfseries Short caption (if wanted).} Full caption with all the details here.}
     \begin{tabular}{c|c}
@@ -36,7 +41,7 @@ Refer to figure like this: Figure~\ref{fig-example} or this (Fig.~\ref{fig-examp
     \label{tab-values}
 \end{table}
 
-\begin{table} \center
+\begin{table}[htbp] \center
     \caption*{This secret table won't be numbered and won't appear in the List of Tables because of the *. Note that OIST policy requires all figures and tables to be numbered.}
     \begin{tabular}{c|c}
         Parameter    & Value   \\ \hline \hline

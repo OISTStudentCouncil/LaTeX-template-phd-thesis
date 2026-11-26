@@ -220,7 +220,7 @@ We can see that if $S_k$ and $S_i$ commute, one only needs to switch their order
   &=& \frac 1 4 (a_{ij} a_{kl}-a_{kj} a_{il}) \left( \delta_{ki} \frac{I_n}n + (if_{kip} + d_{kip})S_p^{\textrm{T}}  \right)\otimes \left(\delta_{jl} \frac{I_{n'}}{n'} +(if'_{jlq} + d'_{jlq}) S'_q\right), \nonumber \\
   &=& \frac 1 4 (a_{ij} a_{kl}-a_{kj} a_{il}) \left( (if_{kip} + d_{kip}) S_p^{\textrm{T}} \right)\otimes \left((if'_{jlq} + d'_{jlq}) S'_q\right),\\
   &=&  -\frac 1 4 f_{kip}f'_{jlq}   (a_{ij} a_{kl}-a_{kj} a_{il})  S_p^{\textrm{T}}  \otimes S'_q ,\\
-  &=&  -\frac 1 2  f_{kip}f'_{jlq}  a_{ij} a_{kl} S_p^{\textrm{T}}  \otimes S'_q, \\
+  &=&  -\frac 1 2  f_{kip}f'_{jlq}  a_{ij} a_{kl} S_p^{\textrm{T}}  \otimes S'_q,
 \end{eqnarray}
 where in the third and fourth step we used the fact that an antisymmetric quantity such as  $(a_{ij} a_{kl}-a_{kj} a_{il})$ summed with a symmetric factor $	\delta_{ki}$ or $d_{kip}$ will amount to zero and in the last step we noted that $f_{kip}f'_{jlq} a_{kj} a_{il}=-f_{kip}f'_{jlq} a_{ij} a_{jl}$. We end up with an null operator expressed in the  $S_p^{\textrm{T}}  \otimes S'_q$ basis which is completely legitimate and we find the following result : the matrix $A$ will satisfy $(\pt {A})^2 = \pt{\left(A^2 \right)}$  if and only if
 \[ f_{kip}f'_{jlq}  a_{ij} a_{kl}=0 , \]
@@ -334,12 +334,12 @@ The state $\ket{\psi}$ is a bipartite even state whose production and properties
 Our first step to simplify the problem is to find a basis in which $\alpha$ can be considered real. Let us consider that the cast state $\ket\alpha$ is expressed in the electromagnetic field mode $a$. The quadrature operators are defined as
 \bea
 x &=& \frac{1}{\sqrt 2} ( a^\dagger + a ), \\
-p &=& \frac{i}{\sqrt 2} ( a^\dagger - a ), \\
+p &=& \frac{i}{\sqrt 2} ( a^\dagger - a ),
 \eea
 and by remembering that the cat states are eigenvalues of the annihilation operator,  we easily find for the mean values
 \bea
 \prodsc{\alpha}{x}{\alpha} &=& \frac{1}{\sqrt 2} ( \alpha^{*} + \alpha ) = \sqrt 2 \mbox{Re}(\alpha), \\
-\prodsc{\alpha}{p}{\alpha} &=& \frac{i}{\sqrt 2} ( \alpha^{*} - \alpha ) = \sqrt 2 \mbox{Im}(\alpha). \\
+\prodsc{\alpha}{p}{\alpha} &=& \frac{i}{\sqrt 2} ( \alpha^{*} - \alpha ) = \sqrt 2 \mbox{Im}(\alpha).
 \eea
 
 We can always find a rotated basis such that we do not need to deal with imaginary parts, let us define
@@ -347,12 +347,12 @@ We can always find a rotated basis such that we do not need to deal with imagina
 x' &=& \cos\theta \;x + \sin\theta \;p = \frac{1}{\sqrt 2} \left( a^\dagger (\cos\theta + i \sin\theta)+ a(\cos\theta - i \sin\theta) \right) \nonumber, \\
 &=&  \frac{1}{\sqrt 2} \left( b^\dagger + b \right), \\
 p' &=& -\sin\theta \;x + \cos\theta \:p = \frac{i}{\sqrt 2} \left( a^\dagger (\cos\theta + i \sin\theta)- a(\cos\theta - i \sin\theta) \right) \nonumber, \\
-&=&  \frac{i}{\sqrt 2} \left( b^\dagger - b \right), \\
+&=&  \frac{i}{\sqrt 2} \left( b^\dagger - b \right),
 \eea
 with $b\equiv e^{-i \theta} a$. By setting $e^{i \theta} = \alpha/|\alpha|$, we find,
 \bea
 \prodsc{\alpha}{x'}{\alpha} &=& \frac{1}{\sqrt 2 |\alpha|} ( \alpha^{*}\alpha + \alpha\alpha^{*} ) = \sqrt 2 |\alpha|, \\
-\prodsc{\alpha}{p'}{\alpha} &=& \frac{i}{\sqrt 2 |\alpha|} ( \alpha^{*}\alpha - \alpha\alpha^{*} ) = 0, \\
+\prodsc{\alpha}{p'}{\alpha} &=& \frac{i}{\sqrt 2 |\alpha|} ( \alpha^{*}\alpha - \alpha\alpha^{*} ) = 0,
 \eea
 which is the result we were looking for, since expressed in the mode $b$, the parameter $\alpha$ can be considered real. Even for a state such as the $\ket\psi$ state given in (\ref{eq-cat}), the same method can be applied since the two cat states $\ket{\pm\alpha}$ have the same imaginary part, up to the sign. We therefore assume that we are working in the electromagnetic modes $a$ and $b$ which treats $\alpha$ and $\beta$ as real numbers, when measuring quadrature operators, which are precisely the operators we use to find a violation of the SRPT inequality.
 

@@ -34,6 +34,21 @@ pdflatex Thesis.tex
 pdflatex Thesis.tex
 ```
 
+## line spacing
+
+There is one version of the thesis. Set the line spacing your field requires
+with the class option in the first line of `Thesis.tex`:
+
+```latex
+\documentclass[onehalfspacing]{oist_thesis}   % the default
+\documentclass[singlespacing]{oist_thesis}
+\documentclass[doublespacing]{oist_thesis}
+```
+
+The older options `temporary` (double spacing) and `final` (single spacing)
+still compile, with a warning, so a thesis started from an earlier version of
+the template keeps working.
+
 ## checking that nothing spills into the margins
 
 The class marks overfull *lines of text* with a thick black bar in the margin.
@@ -50,15 +65,16 @@ Everything is still recorded in `Thesis.log`. After compiling, run
 ```
 
 to list every overfull box with its line numbers. It exits non-zero if there is
-anything left to fix. Both `Template/` and `Examples/` currently build with none
-at all, so anything it reports is something you introduced. The PowerShell
-equivalent is
+anything left to fix. `Examples/` builds with none at all. `Template/` has
+exactly one, put there on purpose in the "Overfull Lines" section of chapter 2
+to show what the black bar looks like. Anything else it reports is something you
+introduced. The PowerShell equivalent is
 
 ```powershell
 Select-String -Path Thesis.log -Pattern '^Overfull' -Context 0,1
 ```
 
-While writing, compiling with `\documentclass[temporary,showframe]{oist_thesis}`
+While writing, compiling with `\documentclass[onehalfspacing,showframe]{oist_thesis}`
 draws the outline of the text block on every page, which makes an over-wide
 equation obvious at a glance. Remove the option before submitting.
 

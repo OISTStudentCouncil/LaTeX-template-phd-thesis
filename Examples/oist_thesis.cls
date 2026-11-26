@@ -8,15 +8,31 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{oist_thesis}[2019/3/17 OIST thesis submission class]
 
-\newif\if@final\@finaltrue
-\DeclareOption{temporary}{\@finalfalse}
-\DeclareOption{final}{\@finaltrue}
+% Line spacing of the thesis. There is a single version of the thesis; pick the
+% spacing your field requires with one of these options:
+%     \documentclass[singlespacing]{oist_thesis}
+%     \documentclass[onehalfspacing]{oist_thesis}   (the default)
+%     \documentclass[doublespacing]{oist_thesis}
+\def\oist@spacing{onehalf}
+\DeclareOption{singlespacing}{\def\oist@spacing{single}}
+\DeclareOption{onehalfspacing}{\def\oist@spacing{onehalf}}
+\DeclareOption{doublespacing}{\def\oist@spacing{double}}
+% Older versions of this class had a "temporary" (double spaced) and a "final"
+% (single spaced) version. Both options are still accepted, so that a thesis
+% started with an older Thesis.tex compiles unchanged, but they only set the
+% line spacing.
+\DeclareOption{temporary}{\def\oist@spacing{double}%
+	\ClassWarningNoLine{oist_thesis}{Option `temporary' is obsolete,
+		use `doublespacing' instead}}
+\DeclareOption{final}{\def\oist@spacing{single}%
+	\ClassWarningNoLine{oist_thesis}{Option `final' is obsolete,
+		use `singlespacing' instead}}
 
 % Draft aid: draw the boundary of the text block on every page, so that
 % anything spilling into the 2.5cm margins (long equations in particular) is
 % impossible to miss.  Purely visual, changes no dimension.  Use it while you
 % write, remove it before you submit:
-%     \documentclass[temporary,showframe]{oist_thesis}
+%     \documentclass[onehalfspacing,showframe]{oist_thesis}
 \newif\if@drawframe\@drawframefalse
 \DeclareOption{showframe}{\@drawframetrue}
 
@@ -32,27 +48,34 @@
 \RequirePackage[a4paper, inner=2.5cm ,outer=2.5cm, top=2.4cm, bottom=2.5cm]{geometry}  % Changing size of document
 
 \usepackage{titlesec} % To move the chapter title up
-% The \vspace*{-6pt} sits in the *label*, which titlesec only typesets for a
+% \linespread{1} keeps the heading itself single spaced whatever line spacing
+% the thesis uses. setspace stretches the baseline of every font size, the
+% \huge heading included, so without it the position of the heading depended on
+% the spacing option: an offset that was right for double spacing put the
+% heading of a single-spaced thesis about 6mm into the top margin, and links
+% from the Contents, which point at the top of the text block, then cut off
+% the top of the heading. With it, the offsets below hold for every option.
+%
+% The \vspace*{-2.7pt} sits in the *label*, which titlesec only typesets for a
 % numbered chapter. A numbered chapter opens with the \huge "Chapter N" while an
 % unnumbered one (Abstract, Introduction, Table of Contents) opens with the
-% \LARGE title, and the taller first line pushed numbered chapters about 2mm
-% further down the page. Correcting it here rather than in \titlespacing means
-% \chapter and \chapter* both start at the same height as ordinary body text.
-\titleformat{\chapter}[display]{\normalfont\huge\bfseries\raggedright}{\vspace*{-6pt}\chaptertitlename\ \thechapter}{20pt}{\LARGE}
-% 0 left, -35pt top, 20pt bottom.
+% \LARGE title, and the taller first line pushed numbered chapters further down
+% the page. Correcting it here rather than in \titlespacing means \chapter and
+% \chapter* both start at the same height as ordinary body text.
+\titleformat{\chapter}[display]{\normalfont\linespread{1}\huge\bfseries\raggedright}{\vspace*{-2.7pt}\chaptertitlename\ \thechapter}{20pt}{\LARGE}
+% 0 left, -18.7pt top, 20pt bottom.
 %
 % The top value is negative on purpose. With 0pt the first line of a chapter
-% heading still sat about 1.4cm below where body text starts on an ordinary
-% page, because titlesec measures from the first baseline and a \huge line
-% reserves far more headroom than a 12pt one. Chapter pages therefore looked
-% like they had a much bigger top margin than every other page.
+% heading sat well below where body text starts on an ordinary page, because
+% titlesec measures from the first baseline and a \huge line reserves far more
+% headroom than a 12pt one. Chapter pages therefore looked like they had a much
+% bigger top margin than every other page.
 %
-% -35pt lines an unnumbered chapter (Abstract, Introduction, Table of Contents)
-% up exactly with body text. A numbered chapter still starts about 2mm lower,
-% because its first line is the \huge "Chapter N" rather than the \LARGE title
-% and a single spacing value has to serve both. Do not push this further: at
-% -40pt the unnumbered chapters rise above the 2.4cm top margin.
-\titlespacing{\chapter}{0pt}{-35pt}{20pt}
+% -18.7pt lines the first line of every chapter heading up with body text,
+% measured in the PDF for single, one-and-a-half and double spacing. Do not
+% push it further: a more negative value lifts the heading above the 2.4cm top
+% margin.
+\titlespacing{\chapter}{0pt}{-18.7pt}{20pt}
 
 % Headings are set ragged right rather than justified.
 %
@@ -67,13 +90,40 @@
 \titleformat{\subsection}{\normalfont\large\bfseries\raggedright}{\thesubsection}{1em}{}
 \titleformat{\subsubsection}{\normalfont\normalsize\bfseries\raggedright}{\thesubsubsection}{1em}{}
 
-\if@final
-    \RequirePackage[font={footnotesize}, labelfont=bf, singlelinecheck=no]{caption} % caption: FIG in bold
+% \thesisspacing applies the chosen line spacing (setspace is loaded in
+% Thesis.tex). Captions are one-and-a-half spaced unless the whole thesis is
+% single spaced.
+\def\oist@tmp{single}
+\ifx\oist@spacing\oist@tmp
+	\RequirePackage[font={footnotesize}, labelfont=bf, singlelinecheck=no]{caption} % caption: FIG in bold
 	\newcommand{\thesisspacing}{\singlespacing}
 \else
 	\RequirePackage[font={onehalfspacing, footnotesize}, labelfont=bf, singlelinecheck=no]{caption} % caption: FIG in bold, 1.5 line spacing in figure and table captions
-	\newcommand{\thesisspacing}{\doublespacing}
+	\def\oist@tmp{double}
+	\ifx\oist@spacing\oist@tmp
+		\newcommand{\thesisspacing}{\doublespacing}
+	\else
+		\newcommand{\thesisspacing}{\onehalfspacing}
+	\fi
 \fi
+
+% A page that holds only figures and tables (a "float page") is filled from the
+% top, with the usual space between floats. LaTeX's default centres the floats
+% vertically and spreads them apart with stretchable space, which left large
+% white gaps above, between and below them.
+\setlength{\@fptop}{0pt}
+\setlength{\@fpsep}{\floatsep}
+\setlength{\@fpbot}{0pt plus 1fil}
+
+% The book class puts an extra 1em above every chapter-level line of the Table
+% of Contents (the bold entries: front matter, chapters, Reference List,
+% appendices). Combined with the thesis line spacing this made the bold entries
+% look further apart than the rest of the Contents. Removing it gives every
+% line of the Contents the same spacing as the body text.
+\RequirePackage{etoolbox}
+\patchcmd{\l@chapter}{\vskip 1.0em \@plus\p@}{}{}%
+	{\ClassWarningNoLine{oist_thesis}{Could not remove the extra space above
+		chapter entries in the Table of Contents}}
 
 % \unnumberedchapter goes right before \chapter*, which starts a new page. The
 % Contents entry and the hyperref anchor have to be placed on that new page, so

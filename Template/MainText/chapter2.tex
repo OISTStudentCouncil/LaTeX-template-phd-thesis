@@ -8,7 +8,7 @@
 \def\verbatim@font{\normalfont}
 \makeatother
 
-This is a practical guide into how to use this template, by explaining the role of the different folders, and the options of \verb|\documentclass{oist_thesis}|, which accepts either \verb|temporary| or \verb|final|, plus an optional \verb|showframe|.
+This is a practical guide into how to use this template, by explaining the role of the different folders, and the options of \verb|\documentclass{oist_thesis}|, which set the line spacing and accept an optional \verb|showframe|.
 
 \section{Folders}
 
@@ -53,9 +53,9 @@ Inside Template there are three folders, detailed here:
 
 \section{Thesis.tex}
 
-This is the main file, the only one that needs to be compiled to build the thesis. Compile once with \LaTeX, once with BibTeX and finally twice with \LaTeX\ to get all the references right. At the top of this file, you can see \verb|\documentclass[temporary]{oist_thesis}|. When you submit a temporary version to the graduate school, do not modify it. When you submit a final version, use \verb|\documentclass[final]{oist_thesis}| instead.
+This is the main file, the only one that needs to be compiled to build the thesis. Compile once with \LaTeX, once with BibTeX and finally twice with \LaTeX\ to get all the references right. At the top of this file, you can see \verb|\documentclass[onehalfspacing]{oist_thesis}|, which sets the line spacing of the whole thesis. Change it only if your field requires a different spacing, as explained in Section~\ref{sec-line-spacing}.
 
-Let's go through each section and comment them briefly. The last section will emphasize the differences between the options \verb|temporary| and \verb|final| of \verb|\documentclass{oist_thesis}|.
+Let's go through each section and comment them briefly. The last two sections explain the line spacing options and the showframe option of \verb|\documentclass{oist_thesis}|.
 
 \subsection{Required Packages and Configurations}
 
@@ -100,7 +100,14 @@ The command \textbackslash numberedchapter is only relevant for a transition bet
 Overfull \hbox (14.45pt too wide) in paragraph at lines 5--151
 \end{verbatim}
 You should always address those warnings and fix the issues, usually by adding a \textbackslash - inside a word to indicate that it can be split at that point.
-To make the issue more obvious, the template will add a thick black line in the margin wherever this happens, you might see several in this document.
+To make the issue more obvious, the template adds a thick black bar in the margin wherever this happens.
+
+The next line is overfull on purpose, so that you can see what the bar looks like. It is held together with \verb|\mbox|, which forbids \LaTeX\ to break it, and it is a little wider than the text block:
+
+% Deliberate overfull line, to show the black bar. Delete it in your thesis.
+\noindent\mbox{so this whole line cannot be broken anywhere and therefore runs into the right margin, next to the bar.}
+
+It is the only overfull line in this template, and it is the one that \verb|./check_overfull.sh| reports. Delete these lines when you write your own thesis.
 
 In general, the final document should compile without any warnings or errors.
 
@@ -126,9 +133,9 @@ Running \verb|./check_overfull.sh| after compiling collects all of these in one 
 Two things make over-wide maths easy to spot while you write.
 Adding the showframe option, as in
 \begin{verbatim}
-\documentclass[temporary,showframe]{oist_thesis}
+\documentclass[onehalfspacing,showframe]{oist_thesis}
 \end{verbatim}
-draws the outline of the text block on every page, so anything sticking out is obvious; remove the option before you submit.
+draws the outline of the text block on every page, so anything sticking out is obvious. Remove the option before you submit.
 Setting \verb|\overfullrule=0pt| in Thesis.tex turns the black bars off again if you find them distracting, but do not submit a thesis that still needs them.
 
 To fix a formula that is too long, break it yourself.
@@ -185,21 +192,24 @@ Includes the bibliography.
 
 Structures the style for the appendices and builds them. The appendices are numbered with letters but are structured like regular chapters.
 
-\subsection{Differences between the Temporary and Final Versions}
+\subsection{Line Spacing} \label{sec-line-spacing}
 
-There is only one difference between
+There is one version of the thesis, and the line spacing is the one formatting choice it leaves to you, because the required spacing depends on your field.
+Pick it with one of these options:
 \begin{verbatim}
-\documentclass[temporary]{oist_thesis}
-\documentclass[final]{oist_thesis}
+\documentclass[singlespacing]{oist_thesis}
+\documentclass[onehalfspacing]{oist_thesis}
+\documentclass[doublespacing]{oist_thesis}
 \end{verbatim}
-namely the line spacing.
-This might create small issues, such as page breaking with large tables, images or captions, when compiling the same content.
+If you give none of them, the thesis is set with one-and-a-half spacing.
+The option applies to the main text, the front matter and the Table of Contents alike. Figure and table captions are one-and-a-half spaced unless the whole thesis is single spaced.
+Changing the spacing moves page breaks, so check large tables, figures and captions again after you change it.
 
-\subsection{The showframe Option}
+\subsection{The Showframe Option}
 
-Besides temporary and final, the class accepts an optional showframe:
+Besides the line spacing, the class accepts an optional showframe:
 \begin{verbatim}
-\documentclass[temporary,showframe]{oist_thesis}
+\documentclass[onehalfspacing,showframe]{oist_thesis}
 \end{verbatim}
 It draws the outline of the text block on every page so that you can see immediately whether an equation, a table or a figure spills into the margins, as discussed in Section~\ref{sec-wide-equations}.
 It is a drafting aid only and changes no dimension of the document, but remove it before you submit.
