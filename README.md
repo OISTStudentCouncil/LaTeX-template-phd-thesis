@@ -34,6 +34,10 @@ pdflatex Thesis.tex
 pdflatex Thesis.tex
 ```
 
+If the log still ends with "Rerun to get cross-references right", run
+`pdflatex Thesis.tex` once more. This happens when the citation numbers move a
+heading onto the next page, so the Contents needs one more run to catch up.
+
 ## line spacing
 
 There is one version of the thesis. Set the line spacing your field requires

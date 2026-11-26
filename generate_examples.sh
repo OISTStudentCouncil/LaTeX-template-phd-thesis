@@ -17,6 +17,13 @@ pdflatex -interaction=nonstopmode Thesis.tex
 bibtex Thesis.aux
 pdflatex -interaction=nonstopmode Thesis.tex
 pdflatex -interaction=nonstopmode Thesis.tex
+# The real citation numbers first appear in the third run. If they move a
+# heading across a page break, the Contents needs another run, so keep going
+# (at most three more times) while LaTeX asks for one.
+for _ in 1 2 3; do
+	grep -q 'Rerun to get' Thesis.log || break
+	pdflatex -interaction=nonstopmode Thesis.tex
+done
 mv Thesis.pdf Thesis_example.pdf
 
 # remove the auxiliary files, keeping the sources and the PDF

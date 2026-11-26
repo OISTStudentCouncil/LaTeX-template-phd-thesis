@@ -125,6 +125,41 @@
 	{\ClassWarningNoLine{oist_thesis}{Could not remove the extra space above
 		chapter entries in the Table of Contents}}
 
+% Keep the link target of a heading on the same page as the heading.
+%
+% A section that happened to start a new page kept its link target at the
+% bottom of the previous page, so clicking it in the Contents jumped one page
+% too early. Two things put the target in front of the page break:
+%
+%   * Current hyperref places the target as soon as titlesec steps the section
+%     counter, which is before titlesec adds the page-break penalty and the
+%     space above the heading. Below, the target is switched off while the
+%     counter is stepped and created at the place titlesec reserves for it,
+%     directly before the title. Older hyperref versions already defer it
+%     there, so this is only done when \LinkTargetOff exists.
+%   * In vertical mode hyperref takes back the space above a target, places the
+%     target and adds the space again, which would still put it before that
+%     space. \oist@headinganchor stops that for headings, and \nobreak keeps
+%     the target and the title together.
+\AtBeginDocument{%
+	\ifdefined\LinkTargetOff
+		\def\ttl@Hy@refstepcounter#1{%
+			\LinkTargetOff\refstepcounter{#1}\LinkTargetOn
+			\def\ttl@Hy@saveanchor{\MakeLinkTarget{#1}}}%
+	\fi}
+\def\oist@headinganchor{%
+	\let\oist@savedsavelastskip\Hy@SaveLastskip
+	\let\oist@savedrestorelastskip\Hy@RestoreLastskip
+	\let\Hy@SaveLastskip\relax
+	\let\Hy@RestoreLastskip\relax
+	\ttl@Hy@saveanchor
+	\let\Hy@SaveLastskip\oist@savedsavelastskip
+	\let\Hy@RestoreLastskip\oist@savedrestorelastskip
+	\ifvmode\nobreak\fi}
+\patchcmd{\ttl@select}{\ttl@Hy@saveanchor}{\oist@headinganchor}{}%
+	{\ClassWarningNoLine{oist_thesis}{Could not keep heading links on the
+		heading's page}}
+
 % \unnumberedchapter goes right before \chapter*, which starts a new page. The
 % Contents entry and the hyperref anchor have to be placed on that new page, so
 % the page is cleared here first. Without the \clearpage both were recorded on
