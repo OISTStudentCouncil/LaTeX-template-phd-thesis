@@ -8,7 +8,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{oist_thesis}[2019/3/17 OIST thesis submission class]
 
-% Line spacing of the thesis. There is a single version of the thesis; pick the
+% Line spacing of the thesis. There is a single version of the thesis. Pick the
 % spacing your field requires with one of these options:
 %     \documentclass[singlespacing]{oist_thesis}
 %     \documentclass[onehalfspacing]{oist_thesis}   (the default)
