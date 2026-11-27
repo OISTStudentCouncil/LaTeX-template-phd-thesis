@@ -53,7 +53,7 @@ Inside Template there are three folders, detailed here:
 
 \section{Thesis.tex}
 
-This is the main file, the only one that needs to be compiled to build the thesis. Compile once with \LaTeX, once with BibTeX and finally twice with \LaTeX\ to get all the references right. At the top of this file, you can see \verb|\documentclass[onehalfspacing]{oist_thesis}|, which sets the line spacing of the whole thesis. Change it only if your field requires a different spacing, as explained in Section~\ref{sec-line-spacing}.
+This is the main file, the only one that needs to be compiled to build the thesis. Compile once with \LaTeX, once with BibTeX and finally twice with \LaTeX\ to get all the references right. At the top of this file, you can see \verb|\documentclass[singlespacing]{oist_thesis}|, which sets the line spacing of the whole thesis. Change it only if your field requires a different spacing (please confirm with your supervisor), as explained in Section~\ref{sec-line-spacing}.
 
 Let's go through each section and comment them briefly. The last two sections explain the line spacing options and the showframe option of \verb|\documentclass{oist_thesis}|.
 
@@ -133,7 +133,7 @@ Running \verb|./check_overfull.sh| after compiling collects all of these in one 
 Two things make over-wide maths easy to spot while you write.
 Adding the showframe option, as in
 \begin{verbatim}
-\documentclass[onehalfspacing,showframe]{oist_thesis}
+\documentclass[singlespacing,showframe]{oist_thesis}
 \end{verbatim}
 draws the outline of the text block on every page, so anything sticking out is obvious. Remove the option before you submit.
 Setting \verb|\overfullrule=0pt| in Thesis.tex turns the black bars off again if you find them distracting, but do not submit a thesis that still needs them.
@@ -194,14 +194,16 @@ Structures the style for the appendices and builds them. The appendices are numb
 
 \subsection{Line Spacing} \label{sec-line-spacing}
 
-There is one version of the thesis, and the line spacing is the one formatting choice it leaves to you, because the required spacing depends on your field.
-Pick it with one of these options:
+There is one version of the thesis, and it is single spaced:
 \begin{verbatim}
 \documentclass[singlespacing]{oist_thesis}
+\end{verbatim}
+If you give no spacing option, the thesis is single spaced as well.
+If your field requires a different spacing (please confirm with your supervisor), you can use one-and-a-half or double spacing instead:
+\begin{verbatim}
 \documentclass[onehalfspacing]{oist_thesis}
 \documentclass[doublespacing]{oist_thesis}
 \end{verbatim}
-If you give none of them, the thesis is set with one-and-a-half spacing.
 The option applies to the main text, the front matter and the Table of Contents alike. Figure and table captions are one-and-a-half spaced unless the whole thesis is single spaced.
 Changing the spacing moves page breaks, so check large tables, figures and captions again after you change it.
 
@@ -209,7 +211,7 @@ Changing the spacing moves page breaks, so check large tables, figures and capti
 
 Besides the line spacing, the class accepts an optional showframe:
 \begin{verbatim}
-\documentclass[onehalfspacing,showframe]{oist_thesis}
+\documentclass[singlespacing,showframe]{oist_thesis}
 \end{verbatim}
 It draws the outline of the text block on every page so that you can see immediately whether an equation, a table or a figure spills into the margins, as discussed in Section~\ref{sec-wide-equations}.
 It is a drafting aid only and changes no dimension of the document, but remove it before you submit.

@@ -8,12 +8,13 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{oist_thesis}[2019/3/17 OIST thesis submission class]
 
-% Line spacing of the thesis. There is a single version of the thesis. Pick the
-% spacing your field requires with one of these options:
-%     \documentclass[singlespacing]{oist_thesis}
-%     \documentclass[onehalfspacing]{oist_thesis}   (the default)
+% Line spacing of the thesis. There is a single version of the thesis. It is
+% single spaced by default. Pick another spacing only if your field requires it
+% (confirm with your supervisor):
+%     \documentclass[singlespacing]{oist_thesis}    (the default)
+%     \documentclass[onehalfspacing]{oist_thesis}
 %     \documentclass[doublespacing]{oist_thesis}
-\def\oist@spacing{onehalf}
+\def\oist@spacing{single}
 \DeclareOption{singlespacing}{\def\oist@spacing{single}}
 \DeclareOption{onehalfspacing}{\def\oist@spacing{onehalf}}
 \DeclareOption{doublespacing}{\def\oist@spacing{double}}
@@ -32,7 +33,7 @@
 % anything spilling into the 2.5cm margins (long equations in particular) is
 % impossible to miss.  Purely visual, changes no dimension.  Use it while you
 % write, remove it before you submit:
-%     \documentclass[onehalfspacing,showframe]{oist_thesis}
+%     \documentclass[singlespacing,showframe]{oist_thesis}
 \newif\if@drawframe\@drawframefalse
 \DeclareOption{showframe}{\@drawframetrue}
 

@@ -40,14 +40,17 @@ heading onto the next page, so the Contents needs one more run to catch up.
 
 ## line spacing
 
-There is one version of the thesis. Set the line spacing your field requires
-with the class option in the first line of `Thesis.tex`:
+There is one version of the thesis, and it is single spaced. The class option
+in the first line of `Thesis.tex` sets the spacing:
 
 ```latex
-\documentclass[onehalfspacing]{oist_thesis}   % the default
-\documentclass[singlespacing]{oist_thesis}
+\documentclass[singlespacing]{oist_thesis}    % the default
+\documentclass[onehalfspacing]{oist_thesis}
 \documentclass[doublespacing]{oist_thesis}
 ```
+
+Use one-and-a-half or double spacing only if your field requires it, and please
+confirm this with your supervisor.
 
 The older options `temporary` (double spacing) and `final` (single spacing)
 still compile, with a warning, so a thesis started from an earlier version of
@@ -78,7 +81,7 @@ introduced. The PowerShell equivalent is
 Select-String -Path Thesis.log -Pattern '^Overfull' -Context 0,1
 ```
 
-While writing, compiling with `\documentclass[onehalfspacing,showframe]{oist_thesis}`
+While writing, compiling with `\documentclass[singlespacing,showframe]{oist_thesis}`
 draws the outline of the text block on every page, which makes an over-wide
 equation obvious at a glance. Remove the option before submitting.
 
